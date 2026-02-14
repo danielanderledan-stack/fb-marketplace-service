@@ -161,75 +161,19 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     }, 5 * 60 * 1000);
 })();
 
-// ===== AI Chat Bot =====
+// ===== AI Chat Bot (n8n webhook) =====
 (function () {
-    const messagesEl = document.getElementById('chat-messages');
-    const inputEl = document.getElementById('chat-input');
-    const sendBtn = document.getElementById('chat-send');
+    var WEBHOOK = 'https://sanctumpcs.app.n8n.cloud/webhook/2ce4aca0-6c46-4420-b117-6a78c68d4edb/chat';
+    var messagesEl = document.getElementById('chat-messages');
+    var inputEl = document.getElementById('chat-input');
+    var sendBtn = document.getElementById('chat-send');
     if (!messagesEl || !inputEl || !sendBtn) return;
 
-    const KB = [
-        {
-            keys: ['free', 'first sale', 'cost nothing', 'no cost'],
-            a: "Your very first sale is 100% free — no strings attached, no card required. We want you to see how we work before committing. After that, it's just an 8% commission on each sale. \ud83c\udf89"
-        },
-        {
-            keys: ['commission', '8%', 'percentage', 'fee', 'how much'],
-            a: "We charge an 8% commission only on items we successfully sell. So if your item sells for $500, you keep $460. No upfront fees, no monthly subscriptions — you only pay when you get paid. \ud83d\udcb0"
-        },
-        {
-            keys: ['flip', 'flipping', 'profit', 'invest'],
-            a: "With our Flip for Profit service, we find undervalued items on Marketplace, buy them, refurbish or re-list them, and sell for a profit — which we split with you. Fill out the form on our Flip page to get started. \ud83d\udd04"
-        },
-        {
-            keys: ['fast', 'quick', 'how long', 'speed', 'time', 'days', 'week'],
-            a: "On average, 87% of items we list sell within 7 days. Our optimised titles, descriptions, and SEO keywords mean your items get 3x more views than a typical listing. Most items move fast! \u26a1"
-        },
-        {
-            keys: ['photo', 'picture', 'image', 'camera'],
-            a: "You don't need a professional camera! We send you a simple photo guide with tips on angles, lighting, and backgrounds. Snap a few pics with your phone and we handle the rest. \ud83d\udcf8"
-        },
-        {
-            keys: ['how', 'work', 'process', 'steps', 'start'],
-            a: "Super simple! 1\ufe0f\u20e3 Tell us what to sell. 2\ufe0f\u20e3 We send a photo guide. 3\ufe0f\u20e3 We create an optimised listing. 4\ufe0f\u20e3 We handle all messages. 5\ufe0f\u20e3 You get paid! First sale is free."
-        },
-        {
-            keys: ['message', 'buyer', 'reply', 'negotiate', 'chat'],
-            a: "We handle ALL buyer communication — enquiries, negotiations, time-wasters, and no-shows. Our fast replies mean 3.1x more buyer engagement compared to the average seller. \ud83d\udcac"
-        },
-        {
-            keys: ['seo', 'keyword', 'title', 'description', 'listing', 'optimise', 'optimize'],
-            a: "We write optimised titles, detailed descriptions, and add SEO-friendly tags to every listing. Your items rank higher in Marketplace search and get up to 3x more views. \ud83d\udd0d"
-        },
-        {
-            keys: ['safe', 'trust', 'scam', 'secure', 'legit'],
-            a: "We meet all buyers in safe, public locations and filter out scammers before arranging meetups. Your first sale is free so you can try us risk-free. \ud83d\udd12"
-        },
-        {
-            keys: ['item', 'sell', 'what can', 'type', 'category', 'electronics', 'furniture'],
-            a: "We sell almost anything — electronics, furniture, appliances, vehicles, sporting goods, fashion, and more. If it can go on Facebook Marketplace, we can sell it! \ud83d\udce6"
-        },
-        {
-            keys: ['payment', 'pay', 'money', 'transfer', 'cash'],
-            a: "Once your item sells, we transfer your share (92% after the free first sale) directly to you, typically within 24 hours. \ud83d\udcb3"
-        },
-        {
-            keys: ['contact', 'email', 'reach', 'phone', 'talk'],
-            a: "Reach us anytime at daniel.anderle.dan@gmail.com \ud83d\udce7 or click 'Get Started' and we'll get back to you within a few hours!"
-        },
-    ];
-
-    function findAnswer(q) {
-        var lower = q.toLowerCase();
-        var best = null, bestScore = 0;
-        for (var i = 0; i < KB.length; i++) {
-            var score = 0;
-            for (var j = 0; j < KB[i].keys.length; j++) {
-                if (lower.includes(KB[i].keys[j])) score++;
-            }
-            if (score > bestScore) { bestScore = score; best = KB[i]; }
-        }
-        return best ? best.a : "Great question! I don't have a specific answer for that one, but Daniel would love to help \u2014 email daniel.anderle.dan@gmail.com and you'll hear back ASAP! \ud83d\udce7";
+    // Persistent session so n8n remembers context
+    var sessionId = sessionStorage.getItem('mf-chat-session');
+    if (!sessionId) {
+        sessionId = 'mf-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+        sessionStorage.setItem('mf-chat-session', sessionId);
     }
 
     function addMsg(text, type) {
@@ -253,20 +197,46 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         messagesEl.scrollTop = messagesEl.scrollHeight;
     }
 
-    function handleSend() {
+    function hideTyping() {
+        var t = document.getElementById('typing-indicator');
+        if (t) t.remove();
+    }
+
+    async function askN8N(question) {
+        try {
+            var res = await fetch(WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'sendMessage',
+                    sessionId: sessionId,
+                    chatInput: question
+                })
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            var data = await res.json();
+            return data.output || data.text || data.response || 'Sorry, I couldn\'t process that. Email us at daniel.anderle.dan@gmail.com for help!';
+        } catch (err) {
+            console.error('Chat error:', err);
+            return 'Oops, something went wrong. Please try again or email us at daniel.anderle.dan@gmail.com!';
+        }
+    }
+
+    async function handleSend() {
         var q = inputEl.value.trim();
         if (!q) return;
         addMsg(q, 'user');
         inputEl.value = '';
         inputEl.disabled = true;
+        sendBtn.disabled = true;
         showTyping();
-        setTimeout(function () {
-            var t = document.getElementById('typing-indicator');
-            if (t) t.remove();
-            addMsg(findAnswer(q), 'bot');
-            inputEl.disabled = false;
-            inputEl.focus();
-        }, 800 + Math.random() * 1000);
+
+        var answer = await askN8N(q);
+        hideTyping();
+        addMsg(answer, 'bot');
+        inputEl.disabled = false;
+        sendBtn.disabled = false;
+        inputEl.focus();
     }
 
     sendBtn.addEventListener('click', handleSend);
@@ -279,3 +249,4 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         });
     });
 })();
+
