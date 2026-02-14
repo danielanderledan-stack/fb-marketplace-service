@@ -31,6 +31,7 @@
                 <a href="#how-it-works">How It Works</a>
                 <a href="#services">Services</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#ask-us">Ask Us</a>
                 <a href="#contact" class="nav-cta">Get Started</a>
             </div>
         </div>
@@ -44,12 +45,12 @@
             <div class="hero-shape hero-shape-3"></div>
         </div>
         <div class="hero-content">
-            <div class="hero-badge">🚀 No risk. No upfront cost.</div>
+            <div class="hero-badge">No risk. No upfront cost.</div>
             <h1>Get Your First Sale<br /><span class="highlight">Completely Free</span></h1>
             <p class="hero-sub">We handle everything — listing, messaging, negotiating & selling on Facebook
                 Marketplace. You just sit back and get paid.</p>
             <div class="hero-buttons">
-                <a href="#sell" class="btn btn-primary" id="btn-sell">
+                <a href="https://tally.so/r/9qDjoK" class="btn btn-primary" id="btn-sell">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4" />
@@ -69,12 +70,12 @@
             </div>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number">500+</span>
+                    <span class="stat-number" id="counter-sales">500+</span>
                     <span class="stat-label">Items Sold</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-number">$120K+</span>
+                    <span class="stat-number" id="counter-revenue">$120K+</span>
                     <span class="stat-label">Revenue Generated</span>
                 </div>
                 <div class="stat-divider"></div>
@@ -376,7 +377,7 @@
                             First sale completely free
                         </li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Start Selling</a>
+                    <a href="https://tally.so/r/9qDjoK" class="btn btn-primary">Start Selling</a>
                 </div>
 
                 <!-- Flip Card -->
@@ -481,7 +482,7 @@
                         <li>✓ Price negotiation</li>
                         <li>✓ <strong>$0 commission — it's on us</strong></li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary"
+                    <a href="https://tally.so/r/9qDjoK" class="btn btn-primary"
                         style="margin-top: 24px; align-self: stretch; justify-content: center;">Get Started Free</a>
                 </div>
                 <div class="price-card featured">
@@ -495,7 +496,7 @@
                         <li>✓ Ongoing support & account management</li>
                         <li>✓ <strong>You keep 80% of every sale</strong></li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary"
+                    <a href="https://tally.so/r/9qDjoK" class="btn btn-primary"
                         style="margin-top: 24px; align-self: stretch; justify-content: center; background: var(--fb-blue-dark);">Start
                         Selling</a>
                 </div>
@@ -639,8 +640,70 @@
             <p>Drop us a message and we'll get you set up in minutes. Remember — your first sale is <strong>completely
                     free</strong>.</p>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-primary btn-large" id="btn-cta-sell">I Want to Sell</a>
+                <a href="https://tally.so/r/9qDjoK" class="btn btn-primary btn-large" id="btn-cta-sell">I Want to
+                    Sell</a>
                 <a href="flip.html" class="btn btn-secondary btn-large" id="btn-cta-flip">I Want to Flip</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ASK US (AI Chat) ===== -->
+    <section class="ask-us" id="ask-us">
+        <div class="container">
+            <div class="ask-header">
+                <div class="ask-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M12 2a7 7 0 0 1 7 7c0 3-2 5.5-4 7l-1 1.5h-4L9 16c-2-1.5-4-4-4-7a7 7 0 0 1 7-7z" />
+                        <line x1="10" y1="22" x2="14" y2="22" />
+                        <line x1="9" y1="19" x2="15" y2="19" />
+                    </svg>
+                    AI-Powered
+                </div>
+                <h2 class="section-title">Got Questions? Ask Us Anything</h2>
+                <p class="section-sub">Our AI assistant knows everything about MarketFlip. Get instant answers 24/7.</p>
+            </div>
+
+            <div class="chat-container">
+                <!-- Suggested questions -->
+                <div class="chat-suggestions">
+                    <button class="suggestion-pill" data-q="How does the free first sale work?">💸 How does the free
+                        first sale work?</button>
+                    <button class="suggestion-pill" data-q="What is the 20% commission on?">📊 What is the 20%
+                        commission on?</button>
+                    <button class="suggestion-pill" data-q="How does flipping work?">🔄 How does flipping work?</button>
+                    <button class="suggestion-pill" data-q="How fast do items sell?">⚡ How fast do items sell?</button>
+                    <button class="suggestion-pill" data-q="Do I need to take photos?">📸 Do I need to take
+                        photos?</button>
+                </div>
+
+                <!-- Chat area -->
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-msg bot">
+                        <div class="chat-avatar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path
+                                    d="M12 2a7 7 0 0 1 7 7c0 3-2 5.5-4 7l-1 1.5h-4L9 16c-2-1.5-4-4-4-7a7 7 0 0 1 7-7z" />
+                                <line x1="10" y1="22" x2="14" y2="22" />
+                            </svg>
+                        </div>
+                        <div class="chat-bubble">Hey! 👋 I'm the MarketFlip assistant. Ask me anything about selling,
+                            flipping, pricing, or how we work!</div>
+                    </div>
+                </div>
+
+                <!-- Input -->
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Type your question..."
+                        autocomplete="off" />
+                    <button class="chat-send" id="chat-send">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -663,7 +726,11 @@
                 <a href="#services">Services</a>
                 <a href="#how-it-works">How It Works</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#ask-us">Ask Us</a>
                 <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-contact">
+                <a href="mailto:daniel.anderle.dan@gmail.com">📧 daniel.anderle.dan@gmail.com</a>
             </div>
             <p class="footer-copy">&copy; 2026 MarketFlip. All rights reserved.</p>
         </div>
