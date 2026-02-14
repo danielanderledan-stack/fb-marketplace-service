@@ -171,11 +171,11 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     const KB = [
         {
             keys: ['free', 'first sale', 'cost nothing', 'no cost'],
-            a: "Your very first sale is 100% free — no strings attached, no card required. We want you to see how we work before committing. After that, it's just a 20% commission on each sale. \ud83c\udf89"
+            a: "Your very first sale is 100% free — no strings attached, no card required. We want you to see how we work before committing. After that, it's just an 8% commission on each sale. \ud83c\udf89"
         },
         {
-            keys: ['commission', '20%', 'percentage', 'fee', 'how much'],
-            a: "We charge a 20% commission only on items we successfully sell. So if your item sells for $500, you keep $400. No upfront fees, no monthly subscriptions — you only pay when you get paid. \ud83d\udcb0"
+            keys: ['commission', '8%', 'percentage', 'fee', 'how much'],
+            a: "We charge an 8% commission only on items we successfully sell. So if your item sells for $500, you keep $460. No upfront fees, no monthly subscriptions — you only pay when you get paid. \ud83d\udcb0"
         },
         {
             keys: ['flip', 'flipping', 'profit', 'invest'],
@@ -211,7 +211,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         },
         {
             keys: ['payment', 'pay', 'money', 'transfer', 'cash'],
-            a: "Once your item sells, we transfer your share (80% after the free first sale) directly to you, typically within 24 hours. \ud83d\udcb3"
+            a: "Once your item sells, we transfer your share (92% after the free first sale) directly to you, typically within 24 hours. \ud83d\udcb3"
         },
         {
             keys: ['contact', 'email', 'reach', 'phone', 'talk'],
