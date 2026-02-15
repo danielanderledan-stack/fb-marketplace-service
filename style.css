@@ -1149,6 +1149,22 @@ img {
     color: rgba(255, 255, 255, 0.25);
 }
 
+.footer-legal {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.footer-legal a {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.3s;
+}
+
+.footer-legal a:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
 /* ===== ASK US / CHAT ===== */
 .ask-us {
     padding: var(--section-pad) 0;

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MarketFlip — TikTok Slides</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050810;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 48px 24px;
+        }
+
+        .slide-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slide-wrapper .label {
+            color: #555;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* ===== SLIDE BASE ===== */
+        .slide {
+            width: 360px;
+            height: 640px;
+            background: #0B1120;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 44px 36px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== SLIDE 1 — HOOK ===== */
+        .slide-1 {
+            text-align: center;
+            align-items: center;
+        }
+
+        .slide-1 h1 {
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .slide-1 h1 em {
+            font-style: normal;
+            color: #42B72A;
+        }
+
+        .slide-1 .watermark {
+            position: absolute;
+            bottom: 32px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.15);
+            letter-spacing: 0.03em;
+        }
+
+        /* ===== SLIDE 2 — PAIN POINT ===== */
+        .slide-2 {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .slide-2 p {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.45;
+            letter-spacing: -0.02em;
+        }
+
+        .slide-2 p s {
+            color: #606770;
+            text-decoration: line-through;
+            text-decoration-color: #FF4444;
+            text-decoration-thickness: 3px;
+        }
+
+        .slide-2 .punchline {
+            margin-top: 44px;
+            font-size: 24px;
+            font-weight: 900;
+            color: #1877F2;
+        }
+
+        /* ===== SLIDE 3 — SOLUTION ===== */
+        .slide-3 {
+            text-align: left;
+        }
+
+        .slide-3 p {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.65;
+            letter-spacing: -0.02em;
+        }
+
+        .slide-3 p span.g {
+            color: #42B72A;
+        }
+
+        /* ===== SLIDE 4 — URGENCY ===== */
+        .slide-4 {
+            text-align: center;
+            align-items: center;
+            gap: 0;
+        }
+
+        .slide-4 h2 {
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .slide-4 .answer {
+            margin-top: 48px;
+            font-size: 40px;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+        }
+
+        .slide-4 .answer em {
+            font-style: normal;
+            color: #42B72A;
+        }
+
+        /* ===== SLIDE 5 — CTA ===== */
+        .slide-5 {
+            text-align: center;
+            align-items: center;
+        }
+
+        .slide-5 .top-line {
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+        }
+
+        .slide-5 h2 {
+            font-size: 54px;
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        .slide-5 h2 span {
+            display: block;
+            font-size: 96px;
+            color: #42B72A;
+        }
+
+        .slide-5 .url {
+            margin-top: 56px;
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            border-bottom: 3px solid #1877F2;
+            padding-bottom: 4px;
+            letter-spacing: -0.01em;
+        }
+
+        .slide-5 .bio {
+            margin-top: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SLIDE 1 -->
+    <div class="slide-wrapper">
+        <div class="label">Slide 1</div>
+        <div class="slide slide-1">
+            <h1>How to flip on Facebook <em>without doing anything</em></h1>
+            <div class="watermark">marketflip.shop</div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide-wrapper">
+        <div class="label">Slide 2</div>
+        <div class="slide slide-2">
+            <p>
+                No more <s>hunting for deals.</s><br /><br />
+                No more <s>haggling with strangers.</s><br /><br />
+                No more <s>no-shows.</s>
+            </p>
+            <p class="punchline">We do it all for you.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide-wrapper">
+        <div class="label">Slide 3</div>
+        <div class="slide slide-3">
+            <p>
+                We find it.<br />
+                We buy it.<br />
+                We sell it.<br /><br />
+                <span class="g">You just pick it up.</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- SLIDE 4 -->
+    <div class="slide-wrapper">
+        <div class="label">Slide 4</div>
+        <div class="slide slide-4">
+            <h2>Sounds too good to be true?</h2>
+            <p class="answer">You're just<br /><em>early.</em></p>
+        </div>
+    </div>
+
+    <!-- SLIDE 5 -->
+    <div class="slide-wrapper">
+        <div class="label">Slide 5</div>
+        <div class="slide slide-5">
+            <div class="top-line">First flip free. Then just</div>
+            <h2>
+                <span>8%</span>
+            </h2>
+            <div class="url">marketflip.shop</div>
+            <div class="bio">link in bio</div>
+        </div>
+    </div>
+
+</body>
+
+</html>
