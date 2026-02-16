@@ -127,8 +127,9 @@ img {
 }
 
 .logo-icon {
-    width: 26px;
-    height: 26px;
+    height: 36px;
+    width: auto;
+    object-fit: contain;
 }
 
 .nav-links {
