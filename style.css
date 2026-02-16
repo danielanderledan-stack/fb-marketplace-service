@@ -91,16 +91,16 @@ img {
     left: 0;
     width: 100%;
     z-index: 1000;
-    padding: 16px 0;
-    transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease), padding 0.4s var(--ease);
-}
-
-.navbar.scrolled {
-    background: rgba(255, 255, 255, 0.92);
+    padding: 12px 0;
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
-    padding: 10px 0;
+    transition: padding 0.4s var(--ease);
+}
+
+.navbar.scrolled {
+    padding: 8px 0;
 }
 
 .nav-inner {
@@ -115,19 +115,14 @@ img {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     font-weight: 800;
     font-size: 1.35rem;
-    color: white;
-    transition: color 0.3s;
-}
-
-.navbar.scrolled .logo {
-    color: var(--fb-blue);
+    color: var(--text-primary);
 }
 
 .logo-icon {
-    height: 36px;
+    height: 52px;
     width: auto;
     object-fit: contain;
 }
@@ -141,20 +136,12 @@ img {
 .nav-links a {
     font-size: 0.9rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-secondary);
     transition: color 0.3s;
     position: relative;
 }
 
-.navbar.scrolled .nav-links a {
-    color: var(--text-secondary);
-}
-
 .nav-links a:hover {
-    color: white;
-}
-
-.navbar.scrolled .nav-links a:hover {
     color: var(--fb-blue);
 }
 
