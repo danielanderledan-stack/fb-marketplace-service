@@ -40,7 +40,7 @@ if (toggleBtns.length) {
 
 // ===== Scroll reveal =====
 const revealElements = document.querySelectorAll(
-    '.showcase-card, .service-card, .step, .price-card, .compare-stat, .compare-col, .cta-section h2, .cta-section p, .cta-buttons'
+    '.service-card, .price-step, .tech-card, .target-card, .cta-section h2, .cta-section p, .cta-buttons'
 );
 
 revealElements.forEach((el) => el.classList.add('reveal'));
