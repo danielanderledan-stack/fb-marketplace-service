@@ -250,3 +250,172 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     });
 })();
 
+// ===== PROFIT CALCULATOR =====
+(function () {
+    var slider = document.getElementById('calc-slider');
+    var sliderLabel = document.getElementById('calc-slider-value');
+    var flipsSelect = document.getElementById('calc-flips');
+    var worstEl = document.getElementById('calc-worst');
+    var avgEl = document.getElementById('calc-avg');
+    var bestEl = document.getElementById('calc-best');
+    var canvas = document.getElementById('calc-chart');
+    if (!slider || !canvas) return;
+
+    var ctx = canvas.getContext('2d');
+
+    function updateSliderFill() {
+        var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+        slider.style.background = 'linear-gradient(to right, #4267B2 ' + pct + '%, #e0e0e0 ' + pct + '%)';
+    }
+
+    function calcGrowth(start, flipsPerMonth, returnRate, months) {
+        var MAX_ITEM_VALUE = 1500;
+        var data = [start];
+        var current = start;
+        for (var m = 1; m <= months; m++) {
+            for (var f = 0; f < flipsPerMonth; f++) {
+                var itemCost = Math.min(current, MAX_ITEM_VALUE);
+                var profit = itemCost * returnRate;
+                current = current + profit;
+            }
+            data.push(Math.round(current));
+        }
+        return data;
+    }
+
+    function drawChart(worstData, avgData, bestData) {
+        var dpr = window.devicePixelRatio || 1;
+        // Reset to CSS-controlled width first to avoid feedback loop
+        canvas.style.width = '100%';
+        var totalW = canvas.clientWidth;
+        var h = 320;
+        canvas.width = totalW * dpr;
+        canvas.height = (h + 50) * dpr;
+        canvas.style.height = (h + 50) + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        var padLeft = 20;
+        var padRight = 20;
+        var padTop = 20;
+        var chartH = h - padTop;
+        var chartW = totalW - padLeft - padRight;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        var maxVal = Math.max.apply(null, bestData) * 1.1;
+        var minVal = 0;
+
+        // Horizontal gridlines only (no labels)
+        var gridCount = 5;
+        for (var i = 0; i <= gridCount; i++) {
+            var y = padTop + (chartH * i) / gridCount;
+            ctx.strokeStyle = 'rgba(0,0,0,0.05)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padLeft, y);
+            ctx.lineTo(padLeft + chartW, y);
+            ctx.stroke();
+        }
+
+        // X labels (months)
+        ctx.font = '11px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#999';
+        for (var i = 0; i < worstData.length; i++) {
+            var x = padLeft + (chartW * i) / (worstData.length - 1);
+            ctx.fillText(i === 0 ? 'Now' : 'M' + i, x, padTop + chartH + 18);
+        }
+
+        function getXY(data, idx) {
+            return {
+                x: padLeft + (chartW * idx) / (data.length - 1),
+                y: padTop + chartH - ((data[idx] - minVal) / (maxVal - minVal)) * chartH
+            };
+        }
+
+        function drawLine(data, color, fillColor) {
+            var p, prev, curr, cpx, grad, last, pt;
+            // Fill
+            ctx.beginPath();
+            p = getXY(data, 0);
+            ctx.moveTo(p.x, p.y);
+            for (var i = 1; i < data.length; i++) {
+                prev = getXY(data, i - 1);
+                curr = getXY(data, i);
+                cpx = (prev.x + curr.x) / 2;
+                ctx.bezierCurveTo(cpx, prev.y, cpx, curr.y, curr.x, curr.y);
+            }
+            last = getXY(data, data.length - 1);
+            ctx.lineTo(last.x, padTop + chartH);
+            ctx.lineTo(padLeft, padTop + chartH);
+            ctx.closePath();
+            grad = ctx.createLinearGradient(0, padTop, 0, padTop + chartH);
+            grad.addColorStop(0, fillColor);
+            grad.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            // Line
+            ctx.beginPath();
+            p = getXY(data, 0);
+            ctx.moveTo(p.x, p.y);
+            for (var i = 1; i < data.length; i++) {
+                prev = getXY(data, i - 1);
+                curr = getXY(data, i);
+                cpx = (prev.x + curr.x) / 2;
+                ctx.bezierCurveTo(cpx, prev.y, cpx, curr.y, curr.x, curr.y);
+            }
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            // Dots
+            for (var i = 0; i < data.length; i++) {
+                pt = getXY(data, i);
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            // End value label
+            var endPt = getXY(data, data.length - 1);
+            var label = '$' + data[data.length - 1].toLocaleString();
+            ctx.font = 'bold 11px Inter, sans-serif';
+            ctx.fillStyle = color;
+            ctx.textAlign = 'right';
+            ctx.fillText(label, endPt.x - 8, endPt.y - 10);
+        }
+
+        // Draw best first (back), then avg, then worst (front) — so all visible
+        drawLine(bestData, '#27ae60', 'rgba(39, 174, 96, 0.10)');
+        drawLine(avgData, '#4267B2', 'rgba(66, 103, 178, 0.10)');
+        drawLine(worstData, '#e67e22', 'rgba(230, 126, 34, 0.10)');
+    }
+
+    function update() {
+        var start = parseInt(slider.value);
+        var flips = parseFloat(flipsSelect.value);
+        sliderLabel.textContent = '$' + start.toLocaleString();
+        updateSliderFill();
+
+        var worstData = calcGrowth(start, flips, 0.10, 12);
+        var avgData = calcGrowth(start, flips, 0.25, 12);
+        var bestData = calcGrowth(start, flips, 0.40, 12);
+
+        worstEl.textContent = '$' + worstData[12].toLocaleString();
+        avgEl.textContent = '$' + avgData[12].toLocaleString();
+        bestEl.textContent = '$' + bestData[12].toLocaleString();
+
+        drawChart(worstData, avgData, bestData);
+    }
+
+    slider.addEventListener('input', update);
+    flipsSelect.addEventListener('change', update);
+    window.addEventListener('resize', update);
+
+    update();
+})();
